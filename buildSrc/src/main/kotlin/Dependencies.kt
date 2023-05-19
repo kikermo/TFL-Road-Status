@@ -15,6 +15,8 @@ object Versions {
     const val material = "1.5.0"
     const val junit = "4.13.2"
     const val androidGradlePlugin = "7.2.1"
+    const val kotlinAndroid = "1.7.20"
+    const val androidLib= "8.0.1"
 }
 
 object Libs {
@@ -37,4 +39,7 @@ object Libs {
 object Plugins {
     const val androidGradle = "com.android.tools.build:gradle:${Versions.androidGradlePlugin}"
     const val kotlinGradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
+    const val androidApplication = "com.android.application"
+    const val androidLibray = "com.android.library"
+    const val kotlinAndroid = "org.jetbrains.kotlin.android"
 }

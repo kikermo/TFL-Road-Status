@@ -1,18 +1,5 @@
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath(Plugins.androidGradle)
-        classpath(Plugins.kotlinGradle)
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
+plugins {
+    id(Plugins.androidApplication) version Versions.androidLib apply false
+    id(Plugins.androidLibray) version Versions.androidLib apply false
+    id(Plugins.kotlinAndroid) version Versions.kotlinAndroid apply false
 }
