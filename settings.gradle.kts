@@ -20,3 +20,5 @@ rootProject.name = "TFL Road Status"
 
 // Modules
 include(":app")
+include(":core-api")
+//include(":core-impl")
