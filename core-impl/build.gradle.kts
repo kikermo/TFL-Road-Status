@@ -9,5 +9,10 @@ java {
 }
 
 dependencies {
+    api(project(":core-api"))
+
     implementation(Libs.Kotlin.stdlib)
+    implementation(Libs.KotlinX.serialisation)
+    implementation(Libs.Dagger.inject)
+    implementation(Libs.retrofit)
 }

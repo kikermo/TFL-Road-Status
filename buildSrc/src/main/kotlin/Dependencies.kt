@@ -9,14 +9,20 @@ object Configuration {
 }
 
 object Versions {
-    const val kotlin = "1.7.0"
-    const val coreKtx = "1.8.0"
-    const val appCompat = "1.4.1"
-    const val material = "1.5.0"
-    const val junit = "4.13.2"
-    const val androidGradlePlugin = "7.2.1"
-    const val kotlinAndroid = "1.7.20"
-    const val androidLib= "8.0.1"
+    const val androidPlugin = "8.0.1"
+    const val kotlinAndroidPlugin = "1.7.20"
+    const val hilt = "2.44"
+
+    internal const val kotlin = "1.7.0"
+    internal const val coreKtx = "1.8.0"
+    internal const val appCompat = "1.4.1"
+    internal const val material = "1.5.0"
+    internal const val junit = "4.13.2"
+    internal const val androidGradlePlugin = "7.2.1"
+    internal const val retrofit = "2.9.0"
+    internal const val kotlinXSerialisation = "1.5.1"
+    internal const val dagger = "2.46.1"
+    internal const val javaxInject = "1"
 }
 
 object Libs {
@@ -31,7 +37,21 @@ object Libs {
         const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
     }
 
-    const val material = "com.google.android.material:material:${Versions.material}"
+    object Android {
+        const val material = "com.google.android.material:material:${Versions.material}"
+    }
+
+    object KotlinX {
+        const val serialisation =
+            "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.kotlinXSerialisation}"
+    }
+
+    object Dagger {
+        const val core = "com.google.dagger:dagger:${Versions.dagger}"
+        const val inject = "javax.inject:javax.inject:${Versions.javaxInject}"
+    }
+
+    const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
 
     const val junit = "junit:junit:${Versions.junit}"
 }
@@ -42,4 +62,5 @@ object Plugins {
     const val androidApplication = "com.android.application"
     const val androidLibray = "com.android.library"
     const val kotlinAndroid = "org.jetbrains.kotlin.android"
+    const val hilt = "com.google.dagger.hilt.android"
 }
