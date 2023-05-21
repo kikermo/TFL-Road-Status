@@ -11,6 +11,7 @@ object Configuration {
 object Versions {
     const val androidPlugin = "8.0.1"
     const val kotlinAndroidPlugin = "1.7.20"
+    const val kotlinXSerialisationPluggin = "1.8.21"
     const val hilt = "2.44"
 
     internal const val kotlin = "1.7.0"
@@ -21,8 +22,6 @@ object Versions {
     internal const val androidGradlePlugin = "7.2.1"
     internal const val retrofit = "2.9.0"
     internal const val kotlinXSerialisation = "1.5.1"
-    internal const val dagger = "2.46.1"
-    internal const val javaxInject = "1"
 }
 
 object Libs {
@@ -46,9 +45,10 @@ object Libs {
             "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.kotlinXSerialisation}"
     }
 
-    object Dagger {
-        const val core = "com.google.dagger:dagger:${Versions.dagger}"
-        const val inject = "javax.inject:javax.inject:${Versions.javaxInject}"
+    object Hilt {
+        const val hiltAndroid = "com.google.dagger:hilt-android:${Versions.hilt}"
+        const val hiltCore = "com.google.dagger:hilt-core:${Versions.hilt}"
+        const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
     }
 
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
@@ -63,4 +63,5 @@ object Plugins {
     const val androidLibray = "com.android.library"
     const val kotlinAndroid = "org.jetbrains.kotlin.android"
     const val hilt = "com.google.dagger.hilt.android"
+    const val serialisation= "plugin.serialization"
 }
