@@ -21,7 +21,9 @@ object Versions {
     internal const val junit = "4.13.2"
     internal const val androidGradlePlugin = "7.2.1"
     internal const val retrofit = "2.9.0"
+    internal const val retrofitSerialisationConverter = "1.0.0"
     internal const val kotlinXSerialisation = "1.5.1"
+    internal const val okhttpLoggingInterceptor = "4.11.0"
 }
 
 object Libs {
@@ -51,7 +53,16 @@ object Libs {
         const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
     }
 
-    const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
+
+    object Retrofit {
+        const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
+        const val serialisationAdapter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${Versions.retrofitSerialisationConverter}"
+    }
+
+    object OkHttp {
+        const val loggingInterceptor =
+            "com.squareup.okhttp3:logging-interceptor:${Versions.okhttpLoggingInterceptor}"
+    }
 
     const val junit = "junit:junit:${Versions.junit}"
 }
@@ -63,5 +74,5 @@ object Plugins {
     const val androidLibray = "com.android.library"
     const val kotlinAndroid = "org.jetbrains.kotlin.android"
     const val hilt = "com.google.dagger.hilt.android"
-    const val serialisation= "plugin.serialization"
+    const val serialisation = "plugin.serialization"
 }

@@ -15,7 +15,9 @@ dependencies {
 
     implementation(Libs.Kotlin.stdlib)
     implementation(Libs.KotlinX.serialisation)
-    implementation(Libs.retrofit)
+    implementation(Libs.Retrofit.retrofit)
+    implementation(Libs.Retrofit.serialisationAdapter)
+    implementation(Libs.OkHttp.loggingInterceptor)
 
     implementation(Libs.Hilt.hiltCore)
     kapt(Libs.Hilt.hiltCompiler)
