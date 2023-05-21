@@ -10,4 +10,9 @@ java {
 
 dependencies {
     implementation(Libs.Kotlin.stdlib)
+
+    api(project(":core-api"))
+    implementation(project(":core-impl"))
+
+
 }

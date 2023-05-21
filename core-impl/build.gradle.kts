@@ -1,6 +1,8 @@
 plugins {
     id("java-library")
     id("org.jetbrains.kotlin.jvm")
+    kotlin("kapt")
+    kotlin("plugin.serialization")
 }
 
 java {
@@ -13,6 +15,8 @@ dependencies {
 
     implementation(Libs.Kotlin.stdlib)
     implementation(Libs.KotlinX.serialisation)
-    implementation(Libs.Dagger.inject)
     implementation(Libs.retrofit)
+
+    implementation(Libs.Hilt.hiltCore)
+    kapt(Libs.Hilt.hiltCompiler)
 }
