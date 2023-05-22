@@ -12,22 +12,26 @@ import javax.inject.Inject
 internal class RoadStatusViewModel @Inject constructor(
 
 ) : ViewModel() {
-    private val mutableViewState = MutableStateFlow<ViewState>(ViewState.Loading)
-    val viewState: StateFlow<ViewState> = mutableViewState.asStateFlow()
+    private val _viewState = MutableStateFlow<ViewState>(ViewState.InitialState(::loadData))
+    val viewState: StateFlow<ViewState> = _viewState.asStateFlow()
 
-    init {
+    private fun loadData(roadName: String) {
+        _viewState.value = ViewState.Loading
+
+        // Interactor call
 
     }
 
-    fun loadData() {
+    private fun handleResponse() {
 
     }
 
     sealed class ViewState {
         object Loading : ViewState()
+        data class InitialState(val onRoadNameSubmitted: (String) -> Unit) : ViewState()
 
-        data class Data(val road: Road) : ViewState()
+        data class RoadStatus(val road: Road) : ViewState()
 
-        data class Error(val errorMessage: String) : ViewState()
+        data class ErrorState(val errorMessage: String) : ViewState()
     }
 }
