@@ -1,0 +1,10 @@
+#!/bin/bash
+
+command="ktlint"
+args="--format"
+
+if command -v "$command" &> /dev/null; then
+    "$command" "$args"
+else
+    echo "Couldn't not format using ktlint as it is not found."
+fi
