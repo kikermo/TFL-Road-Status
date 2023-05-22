@@ -9,5 +9,5 @@ interface RoadStatusService {
     @GET("/Road/{roadId}")
     suspend fun getRoadStatus(
         @Path("roadId") roadId: String,
-    ): Result<RoadResponse>
+    ): Result<List<RoadResponse>>
 }

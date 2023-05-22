@@ -9,13 +9,13 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.kikermo.tflroadstatus.domain.coroutines.CoroutinesContextProvider
 import org.kikermo.tflroadstatus.domain.model.Road
-import org.kikermo.tflroadstatus.domain.usecase.GetRoadStatusUsecase
+import org.kikermo.tflroadstatus.domain.usecase.GetRoadStatusUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 internal class RoadStatusViewModel @Inject constructor(
     private val coroutinesContextProvider: CoroutinesContextProvider,
-    private val getRoadStatus: GetRoadStatusUsecase,
+    private val getRoadStatus: GetRoadStatusUseCase,
 ) : ViewModel() {
     private val _viewState = MutableStateFlow<ViewState>(ViewState.InitialState(::loadData))
     val viewState: StateFlow<ViewState> = _viewState.asStateFlow()
@@ -28,21 +28,23 @@ internal class RoadStatusViewModel @Inject constructor(
         }
     }
 
-    private fun handleResponse(status: GetRoadStatusUsecase.Status) {
+    private fun handleResponse(status: GetRoadStatusUseCase.Status) {
         _viewState.value = when (status) {
-            is GetRoadStatusUsecase.Status.Failure -> ViewState.ErrorState(
+            is GetRoadStatusUseCase.Status.Failure -> ViewState.ErrorState(
                 errorMessage = "error",
                 errorActionText = "try again",
-                errorAction = {},
+                errorAction = { _viewState.value = ViewState.InitialState(::loadData) },
             )
 
-            GetRoadStatusUsecase.Status.RoadNotValid -> ViewState.ErrorState(
+            GetRoadStatusUseCase.Status.RoadNotValid -> ViewState.ErrorState(
                 errorMessage = "error",
                 errorActionText = "try again",
-                errorAction = {},
+                errorAction = { _viewState.value = ViewState.InitialState(::loadData) },
             )
 
-            is GetRoadStatusUsecase.Status.Success -> ViewState.RoadStatus(status.road)
+            is GetRoadStatusUseCase.Status.Success -> ViewState.RoadStatus(status.road) {
+                _viewState.value = ViewState.InitialState(::loadData)
+            }
         }
     }
 
@@ -50,7 +52,7 @@ internal class RoadStatusViewModel @Inject constructor(
         object Loading : ViewState()
         data class InitialState(val onRoadNameSubmitted: (String) -> Unit) : ViewState()
 
-        data class RoadStatus(val road: Road) : ViewState()
+        data class RoadStatus(val road: Road, val searchAgainAction: () -> Unit) : ViewState()
 
         data class ErrorState(
             val errorMessage: String,

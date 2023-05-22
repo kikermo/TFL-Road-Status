@@ -10,6 +10,7 @@ import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.kikermo.tflroadstatus.network.retrofit.ResultCallAdapterFactory
 import retrofit2.Retrofit
 import javax.inject.Named
 import javax.inject.Singleton
@@ -28,18 +29,19 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun providesRetrofit(okHttpClient: OkHttpClient, json: Json): Retrofit {
         val contentType = "application/json".toMediaType()
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(Json.asConverterFactory(contentType))
+            .addConverterFactory(json.asConverterFactory(contentType))
+            .addCallAdapterFactory(ResultCallAdapterFactory())
             .client(okHttpClient)
             .build()
     }
 
     @Provides
     @Singleton
-    fun queryAppenderInterceptor(
+    fun providesQueryAppenderInterceptor(
         @Named(APPLICATION_KEY_NAME) applicationKey: String,
     ): Interceptor {
         return Interceptor { chain ->
@@ -48,6 +50,15 @@ object NetworkModule {
                 .build()
             val newRequest = chain.request().newBuilder().url(newUrl).build()
             chain.proceed(newRequest)
+        }
+    }
+
+    @Provides
+    @Singleton
+    fun providesJsonConfig(
+    ): Json {
+        return Json {
+            ignoreUnknownKeys = true
         }
     }
 

@@ -4,18 +4,18 @@ import org.kikermo.tflroadstatus.domain.model.StatusError
 import org.kikermo.tflroadstatus.repository.RoadStatusRepository
 import javax.inject.Inject
 
-internal class GetRoadStatusUsecaseImpl @Inject constructor(
+internal class GetRoadStatusUseCaseImpl @Inject constructor(
     private val repository: RoadStatusRepository,
-) : GetRoadStatusUsecase {
-    override suspend fun invoke(id: String): GetRoadStatusUsecase.Status {
+) : GetRoadStatusUseCase {
+    override suspend fun invoke(id: String): GetRoadStatusUseCase.Status {
         val response = repository.getRoadStatus(roadId = id).getOrElse {
             return if (it is StatusError.ResourceUnavailableError) {
-                GetRoadStatusUsecase.Status.RoadNotValid
+                GetRoadStatusUseCase.Status.RoadNotValid
             } else {
-                GetRoadStatusUsecase.Status.Failure(it as StatusError)
+                GetRoadStatusUseCase.Status.Failure(it as StatusError)
             }
         }
 
-        return GetRoadStatusUsecase.Status.Success(response)
+        return GetRoadStatusUseCase.Status.Success(response)
     }
 }

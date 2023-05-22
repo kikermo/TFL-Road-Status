@@ -100,7 +100,7 @@ private fun RoadStatus(viewState: RoadStatusViewModel.ViewState.RoadStatus) {
             }
             Spacer(modifier = Modifier.size(32.dp))
             Button(
-                onClick = { },
+                onClick = viewState.searchAgainAction,
             ) {
                 Text(stringResource(id = R.string.road_status_button_search_again))
             }
@@ -143,8 +143,8 @@ fun PreviewRoadStatus() {
                     displayName = "M1",
                     severityStatus = "Heavy traffic",
                     severityStatusDescription = "Retention on Junction 2, near St Albans",
-                ),
-            ),
+                )
+            ) {},
         )
     }
 }
