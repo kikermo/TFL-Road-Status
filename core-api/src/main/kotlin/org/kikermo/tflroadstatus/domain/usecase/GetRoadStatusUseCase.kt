@@ -8,7 +8,7 @@ interface GetRoadStatusUseCase {
 
     sealed class Status {
         data class Success(val road: Road) : Status()
-        object RoadNotValid : Status()
+        data class RoadNotValid(val message:String?) : Status()
         data class Failure(val error: StatusError) : Status()
     }
 }

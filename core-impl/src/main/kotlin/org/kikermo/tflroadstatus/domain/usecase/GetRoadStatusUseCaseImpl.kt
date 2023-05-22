@@ -10,7 +10,7 @@ internal class GetRoadStatusUseCaseImpl @Inject constructor(
     override suspend fun invoke(id: String): GetRoadStatusUseCase.Status {
         val response = repository.getRoadStatus(roadId = id).getOrElse {
             return if (it is StatusError.ResourceUnavailableError) {
-                GetRoadStatusUseCase.Status.RoadNotValid
+                GetRoadStatusUseCase.Status.RoadNotValid(it.nonAvailableMessage)
             } else {
                 GetRoadStatusUseCase.Status.Failure(it as StatusError)
             }

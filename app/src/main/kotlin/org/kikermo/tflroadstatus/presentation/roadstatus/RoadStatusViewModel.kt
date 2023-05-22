@@ -7,15 +7,19 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import org.kikermo.tflroadstatus.R
 import org.kikermo.tflroadstatus.domain.coroutines.CoroutinesContextProvider
 import org.kikermo.tflroadstatus.domain.model.Road
 import org.kikermo.tflroadstatus.domain.usecase.GetRoadStatusUseCase
+import org.kikermo.tflroadstatus.ui.utils.StringProvider
+import org.kikermo.tflroadstatus.ui.utils.toText
 import javax.inject.Inject
 
 @HiltViewModel
 internal class RoadStatusViewModel @Inject constructor(
     private val coroutinesContextProvider: CoroutinesContextProvider,
     private val getRoadStatus: GetRoadStatusUseCase,
+    private val stringProvider: StringProvider,
 ) : ViewModel() {
     private val _viewState = MutableStateFlow<ViewState>(ViewState.InitialState(::loadData))
     val viewState: StateFlow<ViewState> = _viewState.asStateFlow()
@@ -31,14 +35,13 @@ internal class RoadStatusViewModel @Inject constructor(
     private fun handleResponse(status: GetRoadStatusUseCase.Status) {
         _viewState.value = when (status) {
             is GetRoadStatusUseCase.Status.Failure -> ViewState.ErrorState(
-                errorMessage = "error",
-                errorActionText = "try again",
+                errorMessage = status.error.toText(stringProvider),
                 errorAction = { _viewState.value = ViewState.InitialState(::loadData) },
             )
 
-            GetRoadStatusUseCase.Status.RoadNotValid -> ViewState.ErrorState(
-                errorMessage = "error",
-                errorActionText = "try again",
+            is GetRoadStatusUseCase.Status.RoadNotValid -> ViewState.ErrorState(
+                errorMessage = status.message
+                    ?: stringProvider.getString(R.string.road_status_road_not_found_generic),
                 errorAction = { _viewState.value = ViewState.InitialState(::loadData) },
             )
 
@@ -57,7 +60,6 @@ internal class RoadStatusViewModel @Inject constructor(
         data class ErrorState(
             val errorMessage: String,
             val errorAction: () -> Unit,
-            val errorActionText: String,
         ) : ViewState()
     }
 }

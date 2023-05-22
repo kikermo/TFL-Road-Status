@@ -120,7 +120,7 @@ private fun ErrorState(
     ErrorLayout(
         errorMessage = viewState.errorMessage,
         errorAction = viewState.errorAction,
-        errorActionText = viewState.errorActionText,
+        errorActionText = stringResource(id = R.string.general_try_again),
     )
 }
 
