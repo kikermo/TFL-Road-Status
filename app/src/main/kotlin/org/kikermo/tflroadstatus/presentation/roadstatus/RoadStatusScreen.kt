@@ -16,9 +16,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.kikermo.tflroadstatus.R
+import org.kikermo.tflroadstatus.ui.theme.TflRoadStatusTheme
 
 @Composable
 internal fun RoadStatusScreen(
@@ -56,7 +58,7 @@ private fun InitialData(
                 modifier = Modifier.align(alignment = CenterHorizontally),
                 onClick = { onActionSubmitted(value) },
             ) {
-                Text(stringResource(id = R.string.road_status_input_label))
+                Text(stringResource(id = R.string.road_status_button_submit))
             }
         }
     }
@@ -72,4 +74,12 @@ private fun ErrorState() {
 
 @Composable
 private fun RoadStatus() {
+}
+
+@Composable
+@Preview
+fun PreviewInitialData() {
+    TflRoadStatusTheme {
+        InitialData(onActionSubmitted = {})
+    }
 }

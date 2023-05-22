@@ -85,6 +85,8 @@ dependencies {
     implementation(Libs.Compose.foundation)
     implementation(Libs.Compose.material3)
     implementation(Libs.Compose.ui)
+    implementation(Libs.Compose.tooling)
+    implementation(Libs.Compose.toolingPreview)
 
     testImplementation(Libs.junit)
 }

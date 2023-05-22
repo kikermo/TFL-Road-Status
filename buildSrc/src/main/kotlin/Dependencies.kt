@@ -75,7 +75,8 @@ object Libs {
         const val foundation = "androidx.compose.foundation:foundation"
         const val ui = "androidx.compose.ui:ui"
         const val graphics = "androidx.compose.ui:ui-graphics"
-        const val tooling = "androidx.compose.ui:ui-tooling-preview"
+        const val tooling = "androidx.compose.ui:ui-tooling"
+        const val toolingPreview = "androidx.compose.ui:ui-tooling-preview"
         const val material3 = "androidx.compose.material3:material3"
     }
 
