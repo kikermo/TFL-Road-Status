@@ -1,6 +1,6 @@
 object Configuration {
     const val applicationId = "org.kikermo.tflroadstatus"
-    const val compileSdk = 32
+    const val compileSdk = 33
     const val minSdk = 24
     const val targetSdk = 33
     const val versionCode = 1
@@ -13,6 +13,7 @@ object Versions {
     const val kotlinAndroidPlugin = "1.7.20"
     const val kotlinXSerialisationPluggin = "1.8.21"
     const val hilt = "2.44"
+    const val composeCompiler = "1.4.7"
 
     internal const val kotlin = "1.7.0"
     internal const val coreKtx = "1.8.0"
@@ -24,6 +25,9 @@ object Versions {
     internal const val retrofitSerialisationConverter = "1.0.0"
     internal const val kotlinXSerialisation = "1.5.1"
     internal const val okhttpLoggingInterceptor = "4.11.0"
+    internal const val composeBom = "2023.04.01"
+    internal const val composeActivity = "1.5.1"
+    internal const val lifecycleCompose = "2.6.1"
 }
 
 object Libs {
@@ -36,6 +40,9 @@ object Libs {
     object AndroidX {
         const val coreKtx = "androidx.core:core-ktx:${Versions.coreKtx}"
         const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
+        const val composeActivity = "androidx.activity:activity-compose:${Versions.composeActivity}"
+        const val lifecycleComposeRuntime = "androidx.lifecycle:lifecycle-runtime-compose:${Versions.lifecycleCompose}"
+        const val lifecycleComposeViewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.lifecycleCompose}"
     }
 
     object Android {
@@ -53,7 +60,6 @@ object Libs {
         const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
     }
 
-
     object Retrofit {
         const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
         const val serialisationAdapter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${Versions.retrofitSerialisationConverter}"
@@ -62,6 +68,15 @@ object Libs {
     object OkHttp {
         const val loggingInterceptor =
             "com.squareup.okhttp3:logging-interceptor:${Versions.okhttpLoggingInterceptor}"
+    }
+
+    object Compose {
+        const val composeBom = "androidx.compose:compose-bom:${Versions.composeBom}"
+        const val foundation = "androidx.compose.foundation:foundation"
+        const val ui = "androidx.compose.ui:ui"
+        const val graphics = "androidx.compose.ui:ui-graphics"
+        const val tooling = "androidx.compose.ui:ui-tooling-preview"
+        const val material3 = "androidx.compose.material3:material3"
     }
 
     const val junit = "junit:junit:${Versions.junit}"

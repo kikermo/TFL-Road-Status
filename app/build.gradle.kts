@@ -5,6 +5,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 // Read local properties for dev keys
@@ -40,16 +41,13 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("boolean", "PREPROD", "true")
-        }
-        getByName("debug") {
-            buildConfigField("boolean", "PREPROD", "true")
         }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     buildFeatures {
         compose = true
         buildConfig = true
@@ -57,18 +55,37 @@ android {
     kotlinOptions {
         jvmTarget = Configuration.jvmTarget
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.composeCompiler
+    }
+}
+
+kotlin {
+    jvmToolchain(8)
 }
 
 
 dependencies {
     implementation(Libs.Kotlin.stdlib)
 
+    api(project(":core-api"))
+    implementation(project(":core-impl"))
+
     implementation(Libs.AndroidX.appCompat)
     implementation(Libs.AndroidX.coreKtx)
+    implementation(Libs.AndroidX.composeActivity)
+    implementation(Libs.AndroidX.lifecycleComposeRuntime)
+    implementation(Libs.AndroidX.lifecycleComposeViewModel)
 
     implementation(Libs.Hilt.hiltAndroid)
     kapt(Libs.Hilt.hiltCompiler)
 
     implementation(Libs.Android.material)
+
+    implementation(platform(Libs.Compose.composeBom))
+    implementation(Libs.Compose.foundation)
+    implementation(Libs.Compose.material3)
+    implementation(Libs.Compose.ui)
+
     testImplementation(Libs.junit)
 }
