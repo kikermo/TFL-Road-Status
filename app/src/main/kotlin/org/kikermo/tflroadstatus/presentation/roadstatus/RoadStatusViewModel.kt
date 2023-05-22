@@ -9,9 +9,7 @@ import org.kikermo.tflroadstatus.domain.model.Road
 import javax.inject.Inject
 
 @HiltViewModel
-internal class RoadStatusViewModel @Inject constructor(
-
-) : ViewModel() {
+internal class RoadStatusViewModel @Inject constructor() : ViewModel() {
     private val _viewState = MutableStateFlow<ViewState>(ViewState.InitialState(::loadData))
     val viewState: StateFlow<ViewState> = _viewState.asStateFlow()
 
@@ -19,11 +17,9 @@ internal class RoadStatusViewModel @Inject constructor(
         _viewState.value = ViewState.Loading
 
         // Interactor call
-
     }
 
     private fun handleResponse() {
-
     }
 
     sealed class ViewState {

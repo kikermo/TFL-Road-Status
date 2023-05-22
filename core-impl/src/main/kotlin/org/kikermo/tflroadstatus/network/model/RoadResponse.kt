@@ -11,5 +11,5 @@ data class RoadResponse(
     @SerialName("statusSeverityDescription") val statusSeverityDescription: String?,
     @SerialName("bounds") val bounds: String?,
     @SerialName("envelope") val envelope: String?,
-    @SerialName("url") val url: String?
+    @SerialName("url") val url: String?,
 )

@@ -40,7 +40,7 @@ object NetworkModule {
     @Provides
     @Singleton
     fun queryAppenderInterceptor(
-        @Named(APPLICATION_KEY_NAME) applicationKey: String
+        @Named(APPLICATION_KEY_NAME) applicationKey: String,
     ): Interceptor {
         return Interceptor { chain ->
             val newUrl = chain.request().url.newBuilder()

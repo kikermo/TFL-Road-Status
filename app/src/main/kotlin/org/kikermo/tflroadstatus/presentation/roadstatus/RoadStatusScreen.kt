@@ -20,10 +20,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.kikermo.tflroadstatus.R
 
-
 @Composable
 internal fun RoadStatusScreen(
-    viewModel: RoadStatusViewModel = viewModel()
+    viewModel: RoadStatusViewModel = viewModel(),
 ) {
     when (val viewState = viewModel.viewState.collectAsStateWithLifecycle().value) {
         is RoadStatusViewModel.ViewState.InitialState -> InitialData(onActionSubmitted = viewState.onRoadNameSubmitted)
@@ -36,22 +35,22 @@ internal fun RoadStatusScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun InitialData(
-    onActionSubmitted: (String) -> Unit
+    onActionSubmitted: (String) -> Unit,
 ) {
     var value: String by remember { mutableStateOf("") }
 
     Box(
         Modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         Column(
             Modifier
-                .align(alignment = Alignment.Center)
+                .align(alignment = Alignment.Center),
         ) {
             OutlinedTextField(
                 value = value,
                 onValueChange = { value = it },
-                label = { Text(stringResource(id = R.string.road_status_input_label)) }
+                label = { Text(stringResource(id = R.string.road_status_input_label)) },
             )
             Button(
                 modifier = Modifier.align(alignment = CenterHorizontally),
@@ -65,15 +64,12 @@ private fun InitialData(
 
 @Composable
 private fun Loading() {
-
 }
 
 @Composable
 private fun ErrorState() {
-
 }
 
 @Composable
 private fun RoadStatus() {
-
 }
