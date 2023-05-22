@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">TFL Road Status</string>
 
+    <string name="general_error_image_description">Warning sign</string>
+    <string name="general_error">Oops!! Something went wrong</string>
+    <string name="general_try_again">Try again</string>
+
     <string name="road_status_input_label">Road Name</string>
     <string name="road_status_button_submit">Find Status</string>
+    <string name="road_status_button_search_again">Search again</string>
 </resources>

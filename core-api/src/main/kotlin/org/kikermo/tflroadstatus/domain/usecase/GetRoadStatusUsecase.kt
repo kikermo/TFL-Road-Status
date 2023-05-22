@@ -2,7 +2,7 @@ package org.kikermo.tflroadstatus.domain.usecase
 
 import org.kikermo.tflroadstatus.domain.model.Road
 
-interface GetRoadStatus {
+interface GetRoadStatusUsecase {
     suspend operator fun invoke(id: String): Status
 
     sealed class Status {

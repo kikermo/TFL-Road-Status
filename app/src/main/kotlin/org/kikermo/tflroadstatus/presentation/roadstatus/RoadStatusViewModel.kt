@@ -28,6 +28,10 @@ internal class RoadStatusViewModel @Inject constructor() : ViewModel() {
 
         data class RoadStatus(val road: Road) : ViewState()
 
-        data class ErrorState(val errorMessage: String) : ViewState()
+        data class ErrorState(
+            val errorMessage: String,
+            val errorAction: () -> Unit,
+            val errorActionText: String,
+        ) : ViewState()
     }
 }
