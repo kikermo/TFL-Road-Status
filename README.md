@@ -11,11 +11,11 @@ file, specified as an argument when running a gradle command, or set on the `gra
 #### To build the app
 
 ```bash
-./gradlew assemble
+./gradlew assembleDebug
 ```
 
 or with app key
 
 ```bash
-./gradlew assemble -PappKey=[yourAppKey]
+./gradlew assembleDebug -PappKey=[yourAppKey]
 ```
