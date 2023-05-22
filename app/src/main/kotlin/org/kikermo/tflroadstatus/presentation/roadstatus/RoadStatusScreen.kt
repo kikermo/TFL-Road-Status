@@ -21,6 +21,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.kikermo.tflroadstatus.R
 import org.kikermo.tflroadstatus.ui.theme.TflRoadStatusTheme
+import org.kikermo.tflroadstatus.ui.views.ErrorLayout
+import org.kikermo.tflroadstatus.ui.views.LoadingLayout
 
 @Composable
 internal fun RoadStatusScreen(
@@ -65,16 +67,20 @@ private fun InitialData(
 }
 
 @Composable
+private fun RoadStatus() {
+}
+
+@Composable
 private fun Loading() {
+    LoadingLayout()
 }
 
 @Composable
 private fun ErrorState() {
+    ErrorLayout()
 }
 
-@Composable
-private fun RoadStatus() {
-}
+
 
 @Composable
 @Preview
