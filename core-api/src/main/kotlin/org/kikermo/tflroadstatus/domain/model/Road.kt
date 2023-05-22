@@ -4,5 +4,5 @@ data class Road(
     val id: String,
     val displayName: String,
     val severityStatus: String,
-    val severityStatusDescription: String,
+    val severityStatusDescription: String?,
 )

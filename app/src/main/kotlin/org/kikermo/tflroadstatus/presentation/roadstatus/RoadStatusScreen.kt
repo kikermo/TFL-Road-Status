@@ -92,10 +92,12 @@ private fun RoadStatus(viewState: RoadStatusViewModel.ViewState.RoadStatus) {
                 text = viewState.road.severityStatus,
                 style = MaterialTheme.typography.bodyLarge,
             )
-            Text(
-                text = viewState.road.severityStatusDescription,
-                style = MaterialTheme.typography.bodyMedium,
-            )
+            viewState.road.severityStatusDescription?.let { statusDescription ->
+                Text(
+                    text = statusDescription,
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+            }
             Spacer(modifier = Modifier.size(32.dp))
             Button(
                 onClick = { },

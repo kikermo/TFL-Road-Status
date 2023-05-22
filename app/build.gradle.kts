@@ -76,6 +76,8 @@ dependencies {
     implementation(Libs.AndroidX.lifecycleComposeRuntime)
     implementation(Libs.AndroidX.lifecycleComposeViewModel)
 
+    implementation(Libs.Coroutines.android)
+
     implementation(Libs.Hilt.hiltAndroid)
     kapt(Libs.Hilt.hiltCompiler)
 

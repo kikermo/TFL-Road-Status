@@ -28,6 +28,7 @@ object Versions {
     internal const val composeBom = "2023.04.01"
     internal const val composeActivity = "1.5.1"
     internal const val lifecycleCompose = "2.6.1"
+    internal const val coroutines = "1.6.4"
 }
 
 object Libs {
@@ -78,6 +79,10 @@ object Libs {
         const val tooling = "androidx.compose.ui:ui-tooling"
         const val toolingPreview = "androidx.compose.ui:ui-tooling-preview"
         const val material3 = "androidx.compose.material3:material3"
+    }
+
+    object Coroutines {
+        const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
     }
 
     const val junit = "junit:junit:${Versions.junit}"
