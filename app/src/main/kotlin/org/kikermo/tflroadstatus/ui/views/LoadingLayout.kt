@@ -13,11 +13,10 @@ import org.kikermo.tflroadstatus.ui.theme.TflRoadStatusTheme
 fun LoadingLayout() {
     Box(Modifier.fillMaxSize()) {
         CircularProgressIndicator(
-            Modifier.align(Alignment.Center)
+            Modifier.align(Alignment.Center),
         )
     }
 }
-
 
 @Composable
 @Preview

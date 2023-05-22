@@ -55,7 +55,7 @@ private fun InitialData(
         Column(
             Modifier
                 .align(alignment = Alignment.Center),
-            horizontalAlignment = CenterHorizontally
+            horizontalAlignment = CenterHorizontally,
         ) {
             OutlinedTextField(
                 value = value,
@@ -81,11 +81,11 @@ private fun RoadStatus(viewState: RoadStatusViewModel.ViewState.RoadStatus) {
         Column(
             Modifier
                 .align(alignment = Alignment.Center),
-            horizontalAlignment = CenterHorizontally
+            horizontalAlignment = CenterHorizontally,
         ) {
             Text(
                 text = viewState.road.displayName,
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.titleMedium,
             )
             Spacer(modifier = Modifier.size(32.dp))
             Text(
@@ -141,9 +141,8 @@ fun PreviewRoadStatus() {
                     displayName = "M1",
                     severityStatus = "Heavy traffic",
                     severityStatusDescription = "Retention on Junction 2, near St Albans",
-                )
-            )
+                ),
+            ),
         )
     }
 }
-

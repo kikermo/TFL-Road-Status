@@ -32,12 +32,12 @@ fun ErrorLayout(
     Box(Modifier.fillMaxSize()) {
         Column(
             Modifier.align(Alignment.Center),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             val imageModifier = Modifier
                 .background(
                     color = MaterialTheme.colorScheme.errorContainer,
-                    shape = CircleShape
+                    shape = CircleShape,
                 )
                 .padding(16.dp)
             Image(
@@ -49,7 +49,7 @@ fun ErrorLayout(
             Spacer(modifier = Modifier.size(8.dp))
             Text(
                 text = errorMessage,
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodyLarge,
             )
             Spacer(modifier = Modifier.size(16.dp))
             Button(onClick = errorAction) {
@@ -66,7 +66,7 @@ fun PreviewErrorLayout() {
         ErrorLayout(
             errorMessage = stringResource(R.string.general_error),
             errorAction = {},
-            errorActionText = stringResource(R.string.general_try_again)
+            errorActionText = stringResource(R.string.general_try_again),
         )
     }
 }
