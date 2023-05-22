@@ -80,8 +80,6 @@ private fun ErrorState() {
     ErrorLayout()
 }
 
-
-
 @Composable
 @Preview
 fun PreviewInitialData() {
