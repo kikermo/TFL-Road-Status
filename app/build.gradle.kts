@@ -90,7 +90,6 @@ dependencies {
     implementation(Libs.Compose.tooling)
     implementation(Libs.Compose.toolingPreview)
 
-    testImplementation(project(":core-impl"))
     testImplementation(Libs.junit)
     testImplementation(Libs.mockk)
     testImplementation(Libs.Kotlin.testCommon)

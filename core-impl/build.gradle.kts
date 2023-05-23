@@ -25,4 +25,10 @@ dependencies {
 
     implementation(Libs.Hilt.hiltCore)
     kapt(Libs.Hilt.hiltCompiler)
+
+    testImplementation(Libs.junit)
+    testImplementation(Libs.mockk)
+    testImplementation(Libs.Kotlin.testCommon)
+    testImplementation(Libs.Kotlin.testJunit)
+    testImplementation(Libs.Coroutines.test)
 }
