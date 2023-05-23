@@ -16,7 +16,7 @@ internal class RoadStatusRepository @Inject constructor(
             .getRoadStatus(roadId)
             .getOrElse {
                 return Result.failure(it.toStatusError())
-            }.first()
+            }.firstOrNull() ?: return Result.failure(StatusError.ResourceUnavailableError(null))
 
         val road = mapper.map(networkResponse) ?: return Result.failure(StatusError.UnexpectedError)
         return Result.success(road)

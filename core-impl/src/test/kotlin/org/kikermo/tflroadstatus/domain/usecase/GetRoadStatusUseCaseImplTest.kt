@@ -26,7 +26,7 @@ class GetRoadStatusUseCaseImplTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     fun `when road status is fetched successfully, return Success Status`() = runTest {
         // given
-        coEvery { repository.getRoadStatus(any()) } answers { Result.success(road) }
+        coEvery { repository.getRoadStatus(any()) } coAnswers { Result.success(road) }
 
         // when
         val status = useCase(road.id)
@@ -39,7 +39,7 @@ class GetRoadStatusUseCaseImplTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     fun `when road status fails due to internet connection, return Error Status`() = runTest {
         // given
-        coEvery { repository.getRoadStatus(any()) } answers { Result.failure(StatusError.NoInternetConnectionError) }
+        coEvery { repository.getRoadStatus(any()) } coAnswers { Result.failure(StatusError.NoInternetConnectionError) }
 
         // when
         val status = useCase(road.id)
@@ -52,7 +52,7 @@ class GetRoadStatusUseCaseImplTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     fun `when road status fails due to unexpected error, return Failure Status`() = runTest {
         // given
-        coEvery { repository.getRoadStatus(any()) } answers { Result.failure(StatusError.UnexpectedError) }
+        coEvery { repository.getRoadStatus(any()) } coAnswers { Result.failure(StatusError.UnexpectedError) }
 
         // when
         val status = useCase(road.id)
@@ -65,7 +65,7 @@ class GetRoadStatusUseCaseImplTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     fun `when road status fails due to not road not found, return RoadNotValid Status`() = runTest {
         // given
-        coEvery { repository.getRoadStatus(any()) } answers { Result.failure(StatusError.ResourceUnavailableError("")) }
+        coEvery { repository.getRoadStatus(any()) } coAnswers { Result.failure(StatusError.ResourceUnavailableError("")) }
 
         // when
         val status = useCase(road.id)
