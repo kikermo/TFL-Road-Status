@@ -29,6 +29,7 @@ object Versions {
     internal const val composeActivity = "1.5.1"
     internal const val lifecycleCompose = "2.6.1"
     internal const val coroutines = "1.6.4"
+    internal const val mockk = "1.13.5"
 }
 
 object Libs {
@@ -36,14 +37,18 @@ object Libs {
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
         const val extensions = "org.jetbrains.kotlin:kotlin-android-extensions:${Versions.kotlin}"
+        const val testCommon = "org.jetbrains.kotlin:kotlin-test-common:${Versions.kotlin}"
+        const val testJunit = "org.jetbrains.kotlin:kotlin-test-junit:${Versions.kotlin}"
     }
 
     object AndroidX {
         const val coreKtx = "androidx.core:core-ktx:${Versions.coreKtx}"
         const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
         const val composeActivity = "androidx.activity:activity-compose:${Versions.composeActivity}"
-        const val lifecycleComposeRuntime = "androidx.lifecycle:lifecycle-runtime-compose:${Versions.lifecycleCompose}"
-        const val lifecycleComposeViewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.lifecycleCompose}"
+        const val lifecycleComposeRuntime =
+            "androidx.lifecycle:lifecycle-runtime-compose:${Versions.lifecycleCompose}"
+        const val lifecycleComposeViewModel =
+            "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.lifecycleCompose}"
     }
 
     object Android {
@@ -63,7 +68,8 @@ object Libs {
 
     object Retrofit {
         const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
-        const val serialisationAdapter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${Versions.retrofitSerialisationConverter}"
+        const val serialisationAdapter =
+            "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${Versions.retrofitSerialisationConverter}"
     }
 
     object OkHttp {
@@ -82,10 +88,14 @@ object Libs {
     }
 
     object Coroutines {
-        const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
+        const val android =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
+        const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutines}"
     }
 
     const val junit = "junit:junit:${Versions.junit}"
+
+    const val mockk = "io.mockk:mockk:${Versions.mockk}"
 }
 
 object Plugins {
