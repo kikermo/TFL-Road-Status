@@ -151,6 +151,9 @@ fun PreviewRoadStatus() {
                     severityStatusDescription = "Retention on Junction 2, near St Albans",
                 )
             ) {}
-        ) {}
+        )
+
+
+        {}
     }
 }
