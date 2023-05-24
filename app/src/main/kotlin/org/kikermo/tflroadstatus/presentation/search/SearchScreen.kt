@@ -1,4 +1,4 @@
-package org.kikermo.tflroadstatus.presentation.roadstatus
+package org.kikermo.tflroadstatus.presentation.search
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -6,9 +6,15 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -24,18 +30,50 @@ import org.kikermo.tflroadstatus.ui.views.ErrorLayout
 import org.kikermo.tflroadstatus.ui.views.LoadingLayout
 
 @Composable
-internal fun RoadStatusScreen(
-    viewModel: RoadStatusViewModel = hiltViewModel(),
+internal fun SearchScreen(
+    viewModel: SearchViewModel = hiltViewModel(),
 ) {
     when (val viewState = viewModel.viewState.collectAsStateWithLifecycle().value) {
-        RoadStatusViewModel.ViewState.Loading -> Loading()
-        is RoadStatusViewModel.ViewState.RoadStatus -> RoadStatusDetails(viewState)
-        is RoadStatusViewModel.ViewState.ErrorState -> ErrorState(viewState)
+        is SearchViewModel.ViewState.InitialState -> InitialData(onActionSubmitted = viewState.onRoadNameSubmitted)
+        SearchViewModel.ViewState.Loading -> Loading()
+        is SearchViewModel.ViewState.RoadStatus -> RoadStatus(viewState)
+        is SearchViewModel.ViewState.ErrorState -> ErrorState(viewState)
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun InitialData(
+    onActionSubmitted: (String) -> Unit,
+) {
+    var value: String by remember { mutableStateOf("") }
+
+    Box(
+        Modifier
+            .fillMaxSize(),
+    ) {
+        Column(
+            Modifier
+                .align(alignment = Alignment.Center),
+            horizontalAlignment = CenterHorizontally,
+        ) {
+            OutlinedTextField(
+                value = value,
+                onValueChange = { value = it },
+                label = { Text(stringResource(id = R.string.road_status_input_label)) },
+            )
+            Spacer(modifier = Modifier.size(16.dp))
+            Button(
+                onClick = { onActionSubmitted(value) },
+            ) {
+                Text(stringResource(id = R.string.road_status_button_submit))
+            }
+        }
     }
 }
 
 @Composable
-private fun RoadStatusDetails(viewState: RoadStatusViewModel.ViewState.RoadStatus) {
+private fun RoadStatus(viewState: SearchViewModel.ViewState.RoadStatus) {
     Box(
         Modifier
             .fillMaxSize(),
@@ -77,7 +115,7 @@ private fun Loading() {
 
 @Composable
 private fun ErrorState(
-    viewState: RoadStatusViewModel.ViewState.ErrorState,
+    viewState: SearchViewModel.ViewState.ErrorState,
 ) {
     ErrorLayout(
         errorMessage = viewState.errorMessage,
@@ -88,10 +126,18 @@ private fun ErrorState(
 
 @Composable
 @Preview
+fun PreviewInitialData() {
+    TflRoadStatusTheme {
+        InitialData(onActionSubmitted = {})
+    }
+}
+
+@Composable
+@Preview
 fun PreviewRoadStatus() {
     TflRoadStatusTheme {
-        RoadStatusDetails(
-            RoadStatusViewModel.ViewState.RoadStatus(
+        RoadStatus(
+            SearchViewModel.ViewState.RoadStatus(
                 Road(
                     id = "M1",
                     displayName = "M1",

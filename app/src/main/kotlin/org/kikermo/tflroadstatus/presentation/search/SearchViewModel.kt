@@ -1,6 +1,5 @@
-package org.kikermo.tflroadstatus.presentation.roadstatus
+package org.kikermo.tflroadstatus.presentation.search
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,20 +16,13 @@ import org.kikermo.tflroadstatus.ui.utils.toText
 import javax.inject.Inject
 
 @HiltViewModel
-internal class RoadStatusViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
+internal class SearchViewModel @Inject constructor(
     private val coroutinesContextProvider: CoroutinesContextProvider,
     private val getRoadStatus: GetRoadStatusUseCase,
     private val stringProvider: StringProvider,
 ) : ViewModel() {
-    private val _viewState = MutableStateFlow<ViewState>(ViewState.Loading)
+    private val _viewState = MutableStateFlow<ViewState>(ViewState.InitialState(::loadData))
     val viewState: StateFlow<ViewState> = _viewState.asStateFlow()
-
-    private val roadId: String = checkNotNull(savedStateHandle["roadId"])
-
-    init {
-        loadData(roadId)
-    }
 
     private fun loadData(roadName: String) {
         _viewState.value = ViewState.Loading
@@ -44,23 +36,24 @@ internal class RoadStatusViewModel @Inject constructor(
         _viewState.value = when (status) {
             is GetRoadStatusUseCase.Status.Failure -> ViewState.ErrorState(
                 errorMessage = status.error.toText(stringProvider),
-                errorAction = { loadData(roadId) },
+                errorAction = { _viewState.value = ViewState.InitialState(::loadData) },
             )
 
             is GetRoadStatusUseCase.Status.RoadNotValid -> ViewState.ErrorState(
                 errorMessage = status.message
                     ?: stringProvider.getString(R.string.road_status_road_not_found_generic),
-                errorAction = { loadData(roadId) },  // TODO  navigate back to search
+                errorAction = { _viewState.value = ViewState.InitialState(::loadData) },
             )
 
             is GetRoadStatusUseCase.Status.Success -> ViewState.RoadStatus(status.road) {
-                loadData(roadId)  // TODO  navigate back to search
+                _viewState.value = ViewState.InitialState(::loadData)
             }
         }
     }
 
     sealed class ViewState {
         object Loading : ViewState()
+        data class InitialState(val onRoadNameSubmitted: (String) -> Unit) : ViewState()
 
         data class RoadStatus(val road: Road, val searchAgainAction: () -> Unit) : ViewState()
 
