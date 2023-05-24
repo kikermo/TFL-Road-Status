@@ -8,7 +8,7 @@ Featured Libs: Hilt, Jetpack Compose, Retrofit, Compose Navigation\
 Tests: JUnit unit tests
 
 #### Demo
-
+[demo.webm](https://github.com/kikermo/TFL-Road-Status/assets/5659713/f59f8a86-6559-488d-9c11-49c32519ef5d)
 
 
 ### Building instructions
