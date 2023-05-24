@@ -1,6 +1,8 @@
 package org.kikermo.tflroadstatus.presentation.roadstatus
 
+import androidx.lifecycle.SavedStateHandle
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Before
@@ -15,6 +17,7 @@ import kotlin.test.assertIs
 class RoadStatusViewModelTest {
     private val getRoadStatusUseCase: GetRoadStatusUseCase = mockk()
     private val stringProvider: StringProvider = mockk()
+    private val savedStateHandle: SavedStateHandle = mockk()
 
     private val road = Road(
         id = "id",
@@ -28,87 +31,75 @@ class RoadStatusViewModelTest {
 
     @Before
     fun setup() {
-        every { stringProvider.getString(any()) } answers { "" }
+        every { stringProvider.getString(any()) } answers { "A string" }
+        every { savedStateHandle.get<String>(any()) } answers { "roadId" }
     }
 
     @Test
-    fun `when screen starts, show initial status`() {
+    fun `when screen starts, shows loading status`() {
         // when
         initViewModel()
-
-        // then
-        assertIs<RoadStatusViewModel.ViewState.InitialState>(viewModel.viewState.value)
-    }
-
-    @Test
-    fun `when user submits road name, show loading status`() {
-        // given
-        initViewModel()
-        val initialState = viewModel.viewState.value as RoadStatusViewModel.ViewState.InitialState
-
-        // when
-        initialState.onRoadNameSubmitted(road.id)
 
         // then
         assertIs<RoadStatusViewModel.ViewState.Loading>(viewModel.viewState.value)
     }
 
     @Test
-    fun `when user submits road name and it is successful, show road status`() {
+    fun `when road loads successfully, show road status`() {
         // given
-        initViewModel()
-        val initialState = viewModel.viewState.value as RoadStatusViewModel.ViewState.InitialState
         coEvery { getRoadStatusUseCase(any()) } answers { GetRoadStatusUseCase.Status.Success(road) }
 
         // when
-        initialState.onRoadNameSubmitted(road.id)
+        initViewModel()
 
         // then
         assertIs<RoadStatusViewModel.ViewState.RoadStatus>(viewModel.viewState.value)
     }
 
     @Test
-    fun `when user submits road name, but it doesn't exist, show error status`() {
+    fun `when road doesn't exist, show error status`() {
         // given
-        initViewModel()
-        val initialState = viewModel.viewState.value as RoadStatusViewModel.ViewState.InitialState
         coEvery { getRoadStatusUseCase(any()) } answers { GetRoadStatusUseCase.Status.RoadNotValid("") }
 
         // when
-        initialState.onRoadNameSubmitted(road.id)
+        initViewModel()
 
         // then
         assertIs<RoadStatusViewModel.ViewState.ErrorState>(viewModel.viewState.value)
     }
 
     @Test
-    fun `when user submits road name but it fails, show error status`() {
+    fun `when there is a generic error loading road, show error status`() {
         // given
-        initViewModel()
-        val initialState = viewModel.viewState.value as RoadStatusViewModel.ViewState.InitialState
-        coEvery { getRoadStatusUseCase(any()) } answers { GetRoadStatusUseCase.Status.Failure(StatusError.UnexpectedError) }
+        coEvery { getRoadStatusUseCase(any()) } answers {
+            GetRoadStatusUseCase.Status.Failure(
+                StatusError.UnexpectedError
+            )
+        }
 
         // when
-        initialState.onRoadNameSubmitted(road.id)
+        initViewModel()
 
         // then
         assertIs<RoadStatusViewModel.ViewState.ErrorState>(viewModel.viewState.value)
     }
 
     @Test
-    fun `when road status query fails and user presses try again, initial status`() {
+    fun `when road status query fails and user presses try again, load road again`() {
         // given
+        coEvery { getRoadStatusUseCase(any()) } answers {
+            GetRoadStatusUseCase.Status.Failure(
+                StatusError.UnexpectedError
+            )
+        }
         initViewModel()
-        val initialState = viewModel.viewState.value as RoadStatusViewModel.ViewState.InitialState
-        coEvery { getRoadStatusUseCase(any()) } answers { GetRoadStatusUseCase.Status.RoadNotValid("") }
-        initialState.onRoadNameSubmitted(road.id)
         val errorState = viewModel.viewState.value as RoadStatusViewModel.ViewState.ErrorState
 
         // when
         errorState.errorAction()
 
         // then
-        assertIs<RoadStatusViewModel.ViewState.InitialState>(viewModel.viewState.value)
+        coVerify(exactly = 2) { getRoadStatusUseCase(any()) }
     }
 
     private fun initViewModel() {
@@ -116,6 +107,7 @@ class RoadStatusViewModelTest {
             coroutinesContextProvider = TestCoroutineContextProvider(),
             getRoadStatus = getRoadStatusUseCase,
             stringProvider = stringProvider,
+            savedStateHandle = savedStateHandle,
         )
     }
 }

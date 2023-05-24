@@ -1,108 +1,95 @@
 package org.kikermo.tflroadstatus.presentation.roadstatus
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import org.kikermo.tflroadstatus.R
 import org.kikermo.tflroadstatus.domain.model.Road
 import org.kikermo.tflroadstatus.ui.theme.TflRoadStatusTheme
 import org.kikermo.tflroadstatus.ui.views.ErrorLayout
 import org.kikermo.tflroadstatus.ui.views.LoadingLayout
+import org.kikermo.tflroadstatus.ui.views.SimpleAppBarScaffold
 
 @Composable
 internal fun RoadStatusScreen(
-    viewModel: RoadStatusViewModel = viewModel(),
+    viewModel: RoadStatusViewModel = hiltViewModel(),
+    onBackPressed: () -> Unit,
 ) {
     when (val viewState = viewModel.viewState.collectAsStateWithLifecycle().value) {
-        is RoadStatusViewModel.ViewState.InitialState -> InitialData(onActionSubmitted = viewState.onRoadNameSubmitted)
         RoadStatusViewModel.ViewState.Loading -> Loading()
-        is RoadStatusViewModel.ViewState.RoadStatus -> RoadStatus(viewState)
+        is RoadStatusViewModel.ViewState.RoadStatus -> RoadStatusDetails(viewState, onBackPressed)
         is RoadStatusViewModel.ViewState.ErrorState -> ErrorState(viewState)
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun InitialData(
-    onActionSubmitted: (String) -> Unit,
+private fun RoadStatusDetails(
+    viewState: RoadStatusViewModel.ViewState.RoadStatus,
+    onBackPressed: () -> Unit
 ) {
-    var value: String by remember { mutableStateOf("") }
-
-    Box(
-        Modifier
-            .fillMaxSize(),
+    SimpleAppBarScaffold(
+        title = stringResource(id = R.string.road_status_title),
+        backNavigationAction = onBackPressed::invoke
     ) {
+
         Column(
             Modifier
-                .align(alignment = Alignment.Center),
-            horizontalAlignment = CenterHorizontally,
+                .fillMaxSize()
+                .padding(top = 64.dp),
         ) {
-            OutlinedTextField(
-                value = value,
-                onValueChange = { value = it },
-                label = { Text(stringResource(id = R.string.road_status_input_label)) },
-            )
-            Spacer(modifier = Modifier.size(16.dp))
-            Button(
-                onClick = { onActionSubmitted(value) },
-            ) {
-                Text(stringResource(id = R.string.road_status_button_submit))
-            }
-        }
-    }
-}
-
-@Composable
-private fun RoadStatus(viewState: RoadStatusViewModel.ViewState.RoadStatus) {
-    Box(
-        Modifier
-            .fillMaxSize(),
-    ) {
-        Column(
-            Modifier
-                .align(alignment = Alignment.Center),
-            horizontalAlignment = CenterHorizontally,
-        ) {
-            Text(
-                text = viewState.road.displayName,
-                style = MaterialTheme.typography.titleMedium,
-            )
-            Spacer(modifier = Modifier.size(32.dp))
-            Text(
-                text = viewState.road.severityStatus,
-                style = MaterialTheme.typography.bodyLarge,
-            )
-            viewState.road.severityStatusDescription?.let { statusDescription ->
-                Text(
-                    text = statusDescription,
-                    style = MaterialTheme.typography.bodyMedium,
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                border = BorderStroke(
+                    width = 1.dp,
+                    color = MaterialTheme.colorScheme.outline
                 )
-            }
-            Spacer(modifier = Modifier.size(32.dp))
-            Button(
-                onClick = viewState.searchAgainAction,
             ) {
-                Text(stringResource(id = R.string.road_status_button_search_again))
+                Column(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Text(
+                        text = stringResource(R.string.road_status_road_name),
+                        style = MaterialTheme.typography.titleMedium,
+                    )
+                    Text(
+                        text = viewState.road.displayName,
+                        style = MaterialTheme.typography.titleLarge,
+                    )
+                    Text(
+                        text = stringResource(R.string.road_status_road_status),
+                        style = MaterialTheme.typography.titleSmall,
+                    )
+                    Text(
+                        text = viewState.road.severityStatus,
+                        style = MaterialTheme.typography.titleMedium,
+                    )
+                    viewState.road.severityStatusDescription?.let { statusDescription ->
+                        Text(
+                            text = stringResource(R.string.road_status_road_status_details),
+                            style = MaterialTheme.typography.titleSmall,
+                        )
+                        Text(
+                            text = statusDescription,
+                            style = MaterialTheme.typography.bodyLarge,
+                        )
+                    }
+                }
             }
         }
     }
@@ -126,17 +113,9 @@ private fun ErrorState(
 
 @Composable
 @Preview
-fun PreviewInitialData() {
-    TflRoadStatusTheme {
-        InitialData(onActionSubmitted = {})
-    }
-}
-
-@Composable
-@Preview
 fun PreviewRoadStatus() {
     TflRoadStatusTheme {
-        RoadStatus(
+        RoadStatusDetails(
             RoadStatusViewModel.ViewState.RoadStatus(
                 Road(
                     id = "M1",
@@ -144,7 +123,7 @@ fun PreviewRoadStatus() {
                     severityStatus = "Heavy traffic",
                     severityStatusDescription = "Retention on Junction 2, near St Albans",
                 )
-            ) {},
-        )
+            )
+        ) {}
     }
 }

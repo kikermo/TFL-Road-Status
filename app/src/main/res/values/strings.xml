@@ -6,10 +6,16 @@
     <string name="general_error_internet_connection">There seems to be a problem with your internet connection</string>
     <string name="general_error_not_found">We couldn\'t find what you are looking for</string>
     <string name="general_try_again">Try again</string>
+    <string name="general_back">Back</string>
 
 
     <string name="road_status_input_label">Road Name</string>
     <string name="road_status_button_submit">Find Status</string>
     <string name="road_status_button_search_again">Search again</string>
     <string name="road_status_road_not_found_generic">Road not found</string>
+    <string name="road_status_title">Road Status</string>
+    <string name="road_status_navigation_details">Go to Details</string>
+    <string name="road_status_road_name">Road:</string>
+    <string name="road_status_road_status">Status:</string>
+    <string name="road_status_road_status_details">Details:</string>
 </resources>

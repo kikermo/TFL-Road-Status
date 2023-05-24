@@ -75,6 +75,8 @@ dependencies {
     implementation(Libs.AndroidX.composeActivity)
     implementation(Libs.AndroidX.lifecycleComposeRuntime)
     implementation(Libs.AndroidX.lifecycleComposeViewModel)
+    implementation(Libs.AndroidX.navigationCompose)
+    implementation(Libs.AndroidX.hiltNavigationCompose)
 
     implementation(Libs.Coroutines.android)
 

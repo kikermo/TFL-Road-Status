@@ -30,6 +30,8 @@ object Versions {
     internal const val lifecycleCompose = "2.6.1"
     internal const val coroutines = "1.6.4"
     internal const val mockk = "1.13.5"
+    internal const val navigationCompose = "2.5.3"
+    internal const val hiltNavigationCompose = "1.0.0"
 }
 
 object Libs {
@@ -49,6 +51,8 @@ object Libs {
             "androidx.lifecycle:lifecycle-runtime-compose:${Versions.lifecycleCompose}"
         const val lifecycleComposeViewModel =
             "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.lifecycleCompose}"
+        const val navigationCompose = "androidx.navigation:navigation-compose:${Versions.navigationCompose}"
+        const val hiltNavigationCompose = "androidx.hilt:hilt-navigation-compose:${Versions.hiltNavigationCompose}"
     }
 
     object Android {
