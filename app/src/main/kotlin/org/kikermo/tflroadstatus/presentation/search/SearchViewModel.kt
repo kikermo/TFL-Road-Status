@@ -28,15 +28,20 @@ internal class SearchViewModel @Inject constructor(
         _viewState.value = ViewState.Loading
         viewModelScope.launch(coroutinesContextProvider.main) {
             val status = getRoadStatus(roadName)
-            handleResponse(status)
+            handleResponse(
+                status = status,
+                roadName = roadName
+            )
         }
     }
 
-    private fun handleResponse(status: GetRoadStatusUseCase.Status) {
+    private fun handleResponse(status: GetRoadStatusUseCase.Status, roadName: String) {
         _viewState.value = when (status) {
             is GetRoadStatusUseCase.Status.Failure -> ViewState.ErrorState(
                 errorMessage = status.error.toText(stringProvider),
-                errorAction = { _viewState.value = ViewState.InitialState(::loadData) },
+                errorAction = {
+                    loadData(roadName)
+                },
             )
 
             is GetRoadStatusUseCase.Status.RoadNotValid -> ViewState.ErrorState(
@@ -45,17 +50,23 @@ internal class SearchViewModel @Inject constructor(
                 errorAction = { _viewState.value = ViewState.InitialState(::loadData) },
             )
 
-            is GetRoadStatusUseCase.Status.Success -> ViewState.RoadStatus(status.road) {
-                _viewState.value = ViewState.InitialState(::loadData)
-            }
+            is GetRoadStatusUseCase.Status.Success -> ViewState.RoadStatus(
+                findRoadAction = ::loadData,
+                road = status.road
+            )
         }
     }
 
     sealed class ViewState {
         object Loading : ViewState()
-        data class InitialState(val onRoadNameSubmitted: (String) -> Unit) : ViewState()
+        data class InitialState(
+            val findRoadAction: (String) -> Unit,
+        ) : ViewState()
 
-        data class RoadStatus(val road: Road, val searchAgainAction: () -> Unit) : ViewState()
+        data class RoadStatus(
+            val road: Road,
+            val findRoadAction: (String) -> Unit,
+        ) : ViewState()
 
         data class ErrorState(
             val errorMessage: String,

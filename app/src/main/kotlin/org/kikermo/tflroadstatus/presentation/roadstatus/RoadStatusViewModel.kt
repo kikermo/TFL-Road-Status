@@ -50,19 +50,17 @@ internal class RoadStatusViewModel @Inject constructor(
             is GetRoadStatusUseCase.Status.RoadNotValid -> ViewState.ErrorState(
                 errorMessage = status.message
                     ?: stringProvider.getString(R.string.road_status_road_not_found_generic),
-                errorAction = { loadData(roadId) },  // TODO  navigate back to search
+                errorAction = { loadData(roadId) },
             )
 
-            is GetRoadStatusUseCase.Status.Success -> ViewState.RoadStatus(status.road) {
-                loadData(roadId)  // TODO  navigate back to search
-            }
+            is GetRoadStatusUseCase.Status.Success -> ViewState.RoadStatus(status.road)
         }
     }
 
     sealed class ViewState {
         object Loading : ViewState()
 
-        data class RoadStatus(val road: Road, val searchAgainAction: () -> Unit) : ViewState()
+        data class RoadStatus(val road: Road) : ViewState()
 
         data class ErrorState(
             val errorMessage: String,

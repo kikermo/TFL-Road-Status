@@ -1,10 +1,13 @@
 package org.kikermo.tflroadstatus.presentation.roadstatus
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -48,20 +51,30 @@ private fun RoadStatusDetails(
                 .fillMaxSize()
                 .padding(top = 64.dp),
         ) {
-            Text(
-                text = viewState.road.displayName,
-                style = MaterialTheme.typography.titleMedium,
-            )
-            Spacer(modifier = Modifier.size(32.dp))
-            Text(
-                text = viewState.road.severityStatus,
-                style = MaterialTheme.typography.bodyLarge,
-            )
-            viewState.road.severityStatusDescription?.let { statusDescription ->
-                Text(
-                    text = statusDescription,
-                    style = MaterialTheme.typography.bodyMedium,
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                border = BorderStroke(
+                    width = 1.dp,
+                    color = MaterialTheme.colorScheme.outline
                 )
+            ) {
+                Text(
+                    text = viewState.road.displayName,
+                    style = MaterialTheme.typography.titleMedium,
+                )
+                Spacer(modifier = Modifier.size(32.dp))
+                Text(
+                    text = viewState.road.severityStatus,
+                    style = MaterialTheme.typography.bodyLarge,
+                )
+                viewState.road.severityStatusDescription?.let { statusDescription ->
+                    Text(
+                        text = statusDescription,
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
             }
         }
     }
@@ -95,8 +108,7 @@ fun PreviewRoadStatus() {
                     severityStatus = "Heavy traffic",
                     severityStatusDescription = "Retention on Junction 2, near St Albans",
                 )
-            ) {},
-            {}
-        )
+            )
+        ) {}
     }
 }

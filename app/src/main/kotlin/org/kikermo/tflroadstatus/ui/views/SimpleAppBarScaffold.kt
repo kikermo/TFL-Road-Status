@@ -8,8 +8,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,12 +42,20 @@ fun BasicAppBar(
     title: String,
     backNavigationAction: () -> Unit,
 ) {
+    val topAppBarColors =
+        TopAppBarDefaults.smallTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = Color.White,
+        )
+
     TopAppBar(
         title = { Text(text = title, style = MaterialTheme.typography.titleLarge) },
+        colors = topAppBarColors,
         navigationIcon = {
             Image(
                 modifier = Modifier.clickable(onClick = backNavigationAction),
                 painter = painterResource(id = R.drawable.ic_arrow_left),
+                colorFilter = ColorFilter.tint(Color.White),
                 contentDescription = stringResource(id = R.string.general_back)
             )
         }
