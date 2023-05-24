@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class RoadStatusViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
     private val coroutinesContextProvider: CoroutinesContextProvider,
     private val getRoadStatus: GetRoadStatusUseCase,
     private val stringProvider: StringProvider,
