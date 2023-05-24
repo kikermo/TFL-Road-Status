@@ -24,13 +24,15 @@ fun TflRoadStatusNavHost(
         startDestination = startDestination
     ) {
         composable("search") {
-            SearchScreen()
+            SearchScreen(
+                statusDetailsNavigation = { roadId -> navController.navigate("raodStatus/$roadId") }
+            )
         }
         composable(
             "raodStatus/{roadId}",
             arguments = listOf(navArgument("roadId") { type = NavType.StringType })
         ) {
-            RoadStatusScreen()
+            RoadStatusScreen(onBackPressed = { navController.popBackStack() })
         }
     }
 }

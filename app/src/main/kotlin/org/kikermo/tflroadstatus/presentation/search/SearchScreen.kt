@@ -32,11 +32,12 @@ import org.kikermo.tflroadstatus.ui.views.LoadingLayout
 @Composable
 internal fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel(),
+    statusDetailsNavigation: (String) -> Unit,
 ) {
     when (val viewState = viewModel.viewState.collectAsStateWithLifecycle().value) {
         is SearchViewModel.ViewState.InitialState -> InitialData(onActionSubmitted = viewState.onRoadNameSubmitted)
         SearchViewModel.ViewState.Loading -> Loading()
-        is SearchViewModel.ViewState.RoadStatus -> RoadStatus(viewState)
+        is SearchViewModel.ViewState.RoadStatus -> RoadStatus(viewState, statusDetailsNavigation)
         is SearchViewModel.ViewState.ErrorState -> ErrorState(viewState)
     }
 }
@@ -73,7 +74,10 @@ private fun InitialData(
 }
 
 @Composable
-private fun RoadStatus(viewState: SearchViewModel.ViewState.RoadStatus) {
+private fun RoadStatus(
+    viewState: SearchViewModel.ViewState.RoadStatus,
+    statusDetailsNavigation: (String) -> Unit
+) {
     Box(
         Modifier
             .fillMaxSize(),
@@ -100,7 +104,9 @@ private fun RoadStatus(viewState: SearchViewModel.ViewState.RoadStatus) {
             }
             Spacer(modifier = Modifier.size(32.dp))
             Button(
-                onClick = viewState.searchAgainAction,
+                onClick = {
+                    statusDetailsNavigation(viewState.road.id)
+                },
             ) {
                 Text(stringResource(id = R.string.road_status_button_search_again))
             }
@@ -144,7 +150,7 @@ fun PreviewRoadStatus() {
                     severityStatus = "Heavy traffic",
                     severityStatusDescription = "Retention on Junction 2, near St Albans",
                 )
-            ) {},
-        )
+            ) {}
+        ) {}
     }
 }

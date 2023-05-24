@@ -1,16 +1,13 @@
 package org.kikermo.tflroadstatus.presentation.roadstatus
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,28 +19,34 @@ import org.kikermo.tflroadstatus.domain.model.Road
 import org.kikermo.tflroadstatus.ui.theme.TflRoadStatusTheme
 import org.kikermo.tflroadstatus.ui.views.ErrorLayout
 import org.kikermo.tflroadstatus.ui.views.LoadingLayout
+import org.kikermo.tflroadstatus.ui.views.SimpleAppBarScaffold
 
 @Composable
 internal fun RoadStatusScreen(
     viewModel: RoadStatusViewModel = hiltViewModel(),
+    onBackPressed: () -> Unit,
 ) {
     when (val viewState = viewModel.viewState.collectAsStateWithLifecycle().value) {
         RoadStatusViewModel.ViewState.Loading -> Loading()
-        is RoadStatusViewModel.ViewState.RoadStatus -> RoadStatusDetails(viewState)
+        is RoadStatusViewModel.ViewState.RoadStatus -> RoadStatusDetails(viewState, onBackPressed)
         is RoadStatusViewModel.ViewState.ErrorState -> ErrorState(viewState)
     }
 }
 
 @Composable
-private fun RoadStatusDetails(viewState: RoadStatusViewModel.ViewState.RoadStatus) {
-    Box(
-        Modifier
-            .fillMaxSize(),
+private fun RoadStatusDetails(
+    viewState: RoadStatusViewModel.ViewState.RoadStatus,
+    onBackPressed: () -> Unit
+) {
+    SimpleAppBarScaffold(
+        title = stringResource(id = R.string.road_status_title),
+        backNavigationAction = onBackPressed::invoke
     ) {
+
         Column(
             Modifier
-                .align(alignment = Alignment.Center),
-            horizontalAlignment = CenterHorizontally,
+                .fillMaxSize()
+                .padding(top = 64.dp),
         ) {
             Text(
                 text = viewState.road.displayName,
@@ -59,12 +62,6 @@ private fun RoadStatusDetails(viewState: RoadStatusViewModel.ViewState.RoadStatu
                     text = statusDescription,
                     style = MaterialTheme.typography.bodyMedium,
                 )
-            }
-            Spacer(modifier = Modifier.size(32.dp))
-            Button(
-                onClick = viewState.searchAgainAction,
-            ) {
-                Text(stringResource(id = R.string.road_status_button_search_again))
             }
         }
     }
@@ -99,6 +96,7 @@ fun PreviewRoadStatus() {
                     severityStatusDescription = "Retention on Junction 2, near St Albans",
                 )
             ) {},
+            {}
         )
     }
 }
