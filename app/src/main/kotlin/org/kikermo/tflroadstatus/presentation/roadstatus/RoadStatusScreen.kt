@@ -2,11 +2,9 @@ package org.kikermo.tflroadstatus.presentation.roadstatus
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -60,20 +58,37 @@ private fun RoadStatusDetails(
                     color = MaterialTheme.colorScheme.outline
                 )
             ) {
-                Text(
-                    text = viewState.road.displayName,
-                    style = MaterialTheme.typography.titleMedium,
-                )
-                Spacer(modifier = Modifier.size(32.dp))
-                Text(
-                    text = viewState.road.severityStatus,
-                    style = MaterialTheme.typography.bodyLarge,
-                )
-                viewState.road.severityStatusDescription?.let { statusDescription ->
+                Column(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
                     Text(
-                        text = statusDescription,
-                        style = MaterialTheme.typography.bodyMedium,
+                        text = stringResource(R.string.road_status_road_name),
+                        style = MaterialTheme.typography.titleMedium,
                     )
+                    Text(
+                        text = viewState.road.displayName,
+                        style = MaterialTheme.typography.titleLarge,
+                    )
+                    Text(
+                        text = stringResource(R.string.road_status_road_status),
+                        style = MaterialTheme.typography.titleSmall,
+                    )
+                    Text(
+                        text = viewState.road.severityStatus,
+                        style = MaterialTheme.typography.titleMedium,
+                    )
+                    viewState.road.severityStatusDescription?.let { statusDescription ->
+                        Text(
+                            text = stringResource(R.string.road_status_road_status_details),
+                            style = MaterialTheme.typography.titleSmall,
+                        )
+                        Text(
+                            text = statusDescription,
+                            style = MaterialTheme.typography.bodyLarge,
+                        )
+                    }
                 }
             }
         }

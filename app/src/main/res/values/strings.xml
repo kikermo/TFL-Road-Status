@@ -15,4 +15,7 @@
     <string name="road_status_road_not_found_generic">Road not found</string>
     <string name="road_status_title">Road Status</string>
     <string name="road_status_navigation_details">Go to Details</string>
+    <string name="road_status_road_name">Road:</string>
+    <string name="road_status_road_status">Status:</string>
+    <string name="road_status_road_status_details">Details:</string>
 </resources>
