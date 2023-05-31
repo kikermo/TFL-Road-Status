@@ -1,5 +1,6 @@
 package org.kikermo.tflroadstatus.repository
 
+import com.appmattus.kotlinfixture.kotlinFixture
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -23,22 +24,9 @@ class RoadStatusRepositoryTest {
         service = service,
     )
 
-    private val roadResponse = RoadResponse(
-        id = "id",
-        displayName = "displayName",
-        statusSeverity = "statusSeverity",
-        statusSeverityDescription = "statusSeverityDescription",
-        bounds = "bounds",
-        envelope = "envelope",
-        url = "url",
-    )
-
-    private val road = Road(
-        id = "id",
-        displayName = "displayName",
-        severityStatus = "severityStatus",
-        severityStatusDescription = "severityStatusDescription",
-    )
+    private val fixture = kotlinFixture()
+    private val roadResponse = fixture<RoadResponse>()
+    private val road = fixture<Road>()
 
     @Test
     fun `when service returns a successful and mapper succeeds, return successful result`() = runTest {

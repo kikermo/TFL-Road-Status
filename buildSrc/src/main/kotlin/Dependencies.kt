@@ -32,6 +32,7 @@ object Versions {
     internal const val mockk = "1.13.5"
     internal const val navigationCompose = "2.5.3"
     internal const val hiltNavigationCompose = "1.0.0"
+    internal const val appmattusFixtures = "1.2.0"
 }
 
 object Libs {
@@ -98,8 +99,8 @@ object Libs {
     }
 
     const val junit = "junit:junit:${Versions.junit}"
-
     const val mockk = "io.mockk:mockk:${Versions.mockk}"
+    const val appmattusFixtures = "com.appmattus.fixture:fixture:${Versions.appmattusFixtures}"
 }
 
 object Plugins {

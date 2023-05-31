@@ -1,5 +1,6 @@
 package org.kikermo.tflroadstatus.presentation.search
 
+import com.appmattus.kotlinfixture.kotlinFixture
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -16,12 +17,8 @@ class SearchViewModelTest {
     private val getRoadStatusUseCase: GetRoadStatusUseCase = mockk()
     private val stringProvider: StringProvider = mockk()
 
-    private val road = Road(
-        id = "id",
-        displayName = "displayName",
-        severityStatus = "severityStatus",
-        severityStatusDescription = "severityStatusDescription",
-    )
+    private val fixture = kotlinFixture()
+    private val road = fixture<Road>()
 
     private lateinit var viewModel: SearchViewModel
 

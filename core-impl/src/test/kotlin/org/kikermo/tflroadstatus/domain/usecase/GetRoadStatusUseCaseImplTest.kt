@@ -1,5 +1,6 @@
 package org.kikermo.tflroadstatus.domain.usecase
 
+import com.appmattus.kotlinfixture.kotlinFixture
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -15,12 +16,8 @@ class GetRoadStatusUseCaseImplTest {
 
     private val useCase = GetRoadStatusUseCaseImpl(repository)
 
-    private val road = Road(
-        id = "id",
-        displayName = "displayName",
-        severityStatus = "severityStatus",
-        severityStatusDescription = "severityStatusDescription",
-    )
+    private val fixture = kotlinFixture()
+    private val road = fixture<Road>()
 
     @Test
     @OptIn(ExperimentalCoroutinesApi::class)

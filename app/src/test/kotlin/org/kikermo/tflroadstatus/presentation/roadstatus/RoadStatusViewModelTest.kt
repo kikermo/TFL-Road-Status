@@ -1,6 +1,7 @@
 package org.kikermo.tflroadstatus.presentation.roadstatus
 
 import androidx.lifecycle.SavedStateHandle
+import com.appmattus.kotlinfixture.kotlinFixture
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -19,12 +20,8 @@ class RoadStatusViewModelTest {
     private val stringProvider: StringProvider = mockk()
     private val savedStateHandle: SavedStateHandle = mockk()
 
-    private val road = Road(
-        id = "id",
-        displayName = "displayName",
-        severityStatus = "severityStatus",
-        severityStatusDescription = "severityStatusDescription",
-    )
+    private val fixture = kotlinFixture()
+    private val road = fixture<Road>()
 
     private lateinit var viewModel: RoadStatusViewModel
 
