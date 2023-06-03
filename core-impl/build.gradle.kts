@@ -27,7 +27,7 @@ dependencies {
     kapt(Libs.Hilt.hiltCompiler)
 
     testImplementation(Libs.junit)
-    testImplementation(Libs.mockk)
+    testImplementation(Libs.Mockk.mockk)
     testImplementation(Libs.Kotlin.testCommon)
     testImplementation(Libs.Kotlin.testJunit)
     testImplementation(Libs.Coroutines.test)

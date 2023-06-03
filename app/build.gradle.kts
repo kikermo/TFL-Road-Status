@@ -32,6 +32,8 @@ android {
         versionName = Configuration.versionName
 
         buildConfigField("String", "APP_KEY", "\"$appKey\"")
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -47,7 +49,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-
+    packaging {
+        resources.excludes.add("META-INF/*")
+    }
     buildFeatures {
         compose = true
         buildConfig = true
@@ -57,6 +61,17 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.composeCompiler
+    }
+    testOptions {
+        managedDevices {
+            devices {
+                create("pixel2Api31", com.android.build.api.dsl.ManagedVirtualDevice::class) {
+                    device = "Pixel 2"
+                    apiLevel = 31
+                    systemImageSource = "aosp"
+                }
+            }
+        }
     }
 }
 
@@ -91,12 +106,16 @@ dependencies {
     implementation(Libs.Compose.ui)
     implementation(Libs.Compose.tooling)
     implementation(Libs.Compose.toolingPreview)
+    debugImplementation(Libs.Compose.testManifest)
 
     testImplementation(Libs.junit)
-    testImplementation(Libs.mockk)
+    testImplementation(Libs.Mockk.mockk)
     testImplementation(Libs.Kotlin.testCommon)
     testImplementation(Libs.Kotlin.testJunit)
     testImplementation(Libs.Coroutines.test)
     testImplementation(Libs.appmattusFixtures)
 
+    androidTestImplementation(Libs.AndroidX.junitTest)
+    androidTestImplementation(platform(Libs.Compose.composeBom))
+    androidTestImplementation(Libs.Compose.testJunit)
 }

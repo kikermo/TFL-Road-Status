@@ -33,6 +33,7 @@ object Versions {
     internal const val navigationCompose = "2.5.3"
     internal const val hiltNavigationCompose = "1.0.0"
     internal const val appmattusFixtures = "1.2.0"
+    internal const val androidXJunit = "1.1.3"
 }
 
 object Libs {
@@ -54,6 +55,7 @@ object Libs {
             "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.lifecycleCompose}"
         const val navigationCompose = "androidx.navigation:navigation-compose:${Versions.navigationCompose}"
         const val hiltNavigationCompose = "androidx.hilt:hilt-navigation-compose:${Versions.hiltNavigationCompose}"
+        const val junitTest = "androidx.test.ext:junit:${Versions.androidXJunit}"
     }
 
     object Android {
@@ -90,6 +92,8 @@ object Libs {
         const val tooling = "androidx.compose.ui:ui-tooling"
         const val toolingPreview = "androidx.compose.ui:ui-tooling-preview"
         const val material3 = "androidx.compose.material3:material3"
+        const val testJunit = "androidx.compose.ui:ui-test-junit4"
+        const val testManifest = "androidx.compose.ui:ui-test-manifest"
     }
 
     object Coroutines {
@@ -98,8 +102,12 @@ object Libs {
         const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutines}"
     }
 
+    object Mockk {
+        const val mockk = "io.mockk:mockk:${Versions.mockk}"
+    }
+
+
     const val junit = "junit:junit:${Versions.junit}"
-    const val mockk = "io.mockk:mockk:${Versions.mockk}"
     const val appmattusFixtures = "com.appmattus.fixture:fixture:${Versions.appmattusFixtures}"
 }
 

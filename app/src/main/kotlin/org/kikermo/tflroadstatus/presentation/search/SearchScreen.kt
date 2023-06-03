@@ -55,7 +55,7 @@ internal fun SearchScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun InitialState(
+internal fun InitialState(
     viewState: SearchViewModel.ViewState.InitialState,
 ) {
     Box(

@@ -37,3 +37,17 @@ Simply run:
 ```bash
 ./gradlew test
 ```
+
+
+### Running the UI tests
+
+With a connected device or emulator
+```bash
+./gradlew connectedDebugAndroidTest 
+```
+
+It can also be run using Gradle Managed Devices which runs the tests on a headless emulator giving back the results
+
+```bash
+./gradlew pixel2Api31DebugAndroidTest 
+```
